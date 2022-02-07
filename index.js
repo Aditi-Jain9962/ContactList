@@ -76,13 +76,13 @@ app.listen(port, function(err){
 
 app.get('/delete-contact/', function(req, res){
     console.log(req.query);
-    let phone = req.query.phone
+    let id = req.query.id
 
-    let contactindex = contactList.findIndex(contact => contact.phone == phone);
-
-    if(contactindex != -1){
-        contactList.splice(contactindex, 1);
-    }
-
-    return res.redirect('back');
+    Contact.findOneAndDelete(id, function(err){
+        if(err){
+            console.log('error in deleting the object');
+            return;
+        }
+        return res.redirect('back');
+    }) 
 });
